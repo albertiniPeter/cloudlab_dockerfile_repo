@@ -2,4 +2,4 @@
 Dockerfile
 
 ## ubuntu-hadoop-cluster
-基于ubuntu16.04我基础hadoop集群docker镜像
+基于ubuntu16.04为基础hadoop集群docker镜像
