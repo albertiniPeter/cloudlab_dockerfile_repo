@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  mysqlnode:                                             # mysql服务
+    restart: always                                      # 是否随docker服务启动重启
+    privileged: true
+    image: mysql:5.7.28
+    ports: 3306:3306
+    hostname: mysqlnode
+    container_name: mysqlnode
+    command: [                                           # 使用 command 可以覆盖容器启动后默认执行的命令
+            '--character-set-server=utf8mb4',            # 设置数据库表的数据编码
+            '--collation-server=utf8mb4_unicode_ci',     # 设置数据库表的数据编码
+            '--skip-character-set-client-handshake',     # 跳过mysql程序起动时的字符参数设置 ，使用服务器端字符集设置
+            '--sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+            ]
+    environment:
+      MYSQL_ROOT_PASSWORD: root                          # 设置root连接密码
+      MYSQL_DATABASE: hive                               # 设置初始的数据库名
+      TZ: Asia/Shanghai                                  # 设置数据库时区
+    networks:
+      - my-net                                           # 自定义的网络，会在第一次构建时候创建自定义网络，默认是bridge
+
+  namenode:
+    restart: always
+    privileged: true
+    build: ./namenode
+    hostname: namenode
+    container_name: namenode
+    ports:
+      - 8088:8088
+      - 9000:9000
+      - 50070:50070
+    networks:
+      - cluster-net                                      # 自定义的网络，会在第一次构建时候创建自定义网络，默认是bridge
+
+  datanode1:                                             # 从节点1
+    restart: always
+    privileged: true
+    build: ./datanode
+    hostname: datanode1
+    container_name: datanode1
+    networks:
+      - cluster-net                                      # 自定义的网络，会在第一次构建时候创建自定义网络，默认是bridge
+
+  datanode2:                                             # 从节点2
+    restart: always
+    privileged: true
+    build: ./datanode
+    hostname: datanode2
+    container_name: datanode2
+    networks:
+      - cluster-net                                      # 自定义的网络，会在第一次构建时候创建自定义网络，默认是bridge
+    
+  networks:
+    cluster-net:
+      driver: bridge

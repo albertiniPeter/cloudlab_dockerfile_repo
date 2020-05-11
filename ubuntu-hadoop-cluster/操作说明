@@ -1,0 +1,12 @@
+创建docker镜像：
+    docker build -t ubuntu-hadoop-base .
+    docker build -t ubuntu-hadoop-namenode .
+    docker build -t ubuntu-hadoop-datanode .
+
+启动容器(指定网卡 ip)：
+    docker run -itd --net vlan9999 --ip 10.0.2.21 --name namenode -p 50070:50070 -p 9000:9000 -p 8088:8088 ubuntu-hadoop-namenode /bin/bash
+    docker run -itd --net vlan9999 --ip 10.0.2.22 --name datanode1 ubuntu-hadoop-datanode /bin/bash
+    docker run -itd --net vlan9999 --ip 10.0.2.23 --name datanode2 ubuntu-hadoop-datanode /bin/bash
+    docker run -itd --net vlan9999 --ip 10.0.2.24 --name datanode3 ubuntu-hadoop-datanode /bin/bash
+
+根据【hadoop集群配置说明手册】修改配置文件

@@ -1,0 +1,30 @@
+服务名称：namenode datanode1 datanode2 datanode3
+
+1、环境变量：（namenode datanode1 datanode2 datanode3）
+    # jdk environment
+    JAVA_HOME /usr/lib/jvm/jdk1.8.0_121
+
+    # hadoop environment
+    HADOOP_VERSION 2.7.3
+    HADOOP_HOME /usr/local/hadoop
+    HADOOP_CONF_DIR ${HADOOP_HOME}/etc/hadoop 
+    YARN_HOME /usr/local/hadoop 
+    YARN_CONF_DIR ${YARN_HOME}/etc/hadoop 
+
+    # software install path
+    JDK_INSTALL_PATH /usr/lib/jvm
+    USR_LOCAL_PATH /usr/local
+
+2、端口映射
+    namenode：
+        50070	50070
+        8088	8088
+        9000	9000
+        22		22
+    datanode1 datanode2 datanode3
+        22		22
+
+3）访问地址（namenode节点）
+	hdfs服务地址        hdfs://namenode的IP:9000
+	Yarn页面访问地址    http://namenode的IP:8088
+	hdfs页面访问地址    http://namenode的IP:50070

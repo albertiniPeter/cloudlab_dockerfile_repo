@@ -19,7 +19,7 @@
 <configuration>
 	<property>
 		<name>dfs.namenode.secondary.httpaddress</name>
-		<value>hadoop000:9001</value>
+		<value>namenode:9001</value>
 	</property>
 	<property>
 		<name>dfs.namenode.name.dir</name>
